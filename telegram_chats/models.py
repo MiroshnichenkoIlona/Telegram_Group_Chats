@@ -27,7 +27,7 @@ class GroupChat(models.Model):
     input_chat_link = models.CharField(max_length=100)
     output_chat_link = models.CharField(max_length=100)
     keywords = models.ManyToManyField(KeyWord)
-    anti_keywords = models.ManyToManyField(AntiKeyWord)
+    anti_keywords = models.ManyToManyField(AntiKeyWord, blank=True, null=True)
 
 
 class SessionCredentials(models.Model):
