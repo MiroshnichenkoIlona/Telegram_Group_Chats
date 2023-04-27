@@ -1,8 +1,14 @@
 from django.contrib import admin
-from .models import KeyWord, MinusWord, GroupChat, SessionCredentials
+from .models import KeyWord, AntiKeyWord, MinusWord, GroupChat, SessionCredentials
 
 
 @admin.register(KeyWord)
+class SettingAdmin(admin.ModelAdmin):
+    list_display = ('word_name',)
+    search_fields = ('word_name',)
+
+
+@admin.register(AntiKeyWord)
 class SettingAdmin(admin.ModelAdmin):
     list_display = ('word_name',)
     search_fields = ('word_name',)

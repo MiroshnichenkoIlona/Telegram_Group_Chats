@@ -26,6 +26,15 @@ def keywords_handler(text):
     return False
 
 
+def group_anti_keywords_handler(anti_keywords, text):
+    print('1')
+    for keyword in anti_keywords:
+        print('2')
+        if keyword.word_name.lower() in text.lower():
+            return True
+    return False
+
+
 def anti_keywords_handler(text):
     anti_keywords = list(MinusWord.objects.all())
     for anti_keyword in anti_keywords:
@@ -49,20 +58,30 @@ async def send_into_output_chat(output_link, final_message_for_chat):
 @client.on(events.NewMessage())
 async def handle_new_message(event):
     text = event.message.text
+
     if anti_keywords_handler(text):
         return
+
     sender = await event.get_sender()
     chat = await event.get_chat()
     keyword = keywords_handler(text)
+
     if keyword is False:
         return
+
     filter_link = "t.me/" + event.chat.username
     message_link = f'https://t.me/{chat.username}/{event.id}'
     final_message_for_chat = '@' + sender.username + '\n' + text + '\n' + message_link + '\n' + filter_link + '\n' + 'keyword: ' + keyword.word_name
-    link_for_output = correspondence_check_by_keyword(filter_link, keyword)
-    if link_for_output is False:
+    group_chat = correspondence_check_by_keyword(filter_link, keyword)
+
+    if group_chat is False:
         return
-    await send_into_output_chat(link_for_output.output_chat_link, final_message_for_chat)
+    print('sa')
+    if group_anti_keywords_handler(group_chat.anti_keywords.all(), text):
+        print('sad')
+        return
+
+    await send_into_output_chat(group_chat.output_chat_link, final_message_for_chat)
 
 
 class Command(BaseCommand):

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(m!b8wn*doo2r3x7624&w^illqiovo%ee=pi8ih=pdd-t62r^#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sorter.fun']
+ALLOWED_HOSTS = ['sorter.fun', '127.0.0.1']
 
 
 # Application definition

@@ -9,6 +9,13 @@ class KeyWord(models.Model):
         return self.word_name
 
 
+class AntiKeyWord(models.Model):
+    word_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.word_name
+
+
 class MinusWord(models.Model):
     minus_word_name = models.CharField(max_length=100)
 
@@ -20,6 +27,7 @@ class GroupChat(models.Model):
     input_chat_link = models.CharField(max_length=100)
     output_chat_link = models.CharField(max_length=100)
     keywords = models.ManyToManyField(KeyWord)
+    anti_keywords = models.ManyToManyField(AntiKeyWord)
 
 
 class SessionCredentials(models.Model):
